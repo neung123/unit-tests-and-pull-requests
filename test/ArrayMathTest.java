@@ -26,9 +26,64 @@ public class ArrayMathTest {
 		assertEquals( 0.0, ArrayMath.dotProduct(x, y), TOL);
 	}
 	
-	//TODO Add at least one test for the "typical" case: vectors larger than 1.
-	// Please don't copy my tests. You don't need random numbers (not a good idea
-	// because test results may not be reproducable).
+	@Test
+	public void testDotProductThreeVectors() {
+		double[] x = {-0.9, 8.5, 1.2};
+		double[] y = {90.0, 5.2, 7.9};
+		double[] z = {4.2, 0.36, 8.6};
+		
+		double[] sumOfTwoVectors = new double[x.length];
+		double expected = 0;
+		for (int i = 0; i < x.length; i++) {
+			sumOfTwoVectors[i] = y[i] + z[i];
+			expected += x[i] * sumOfTwoVectors[i];
+		}
+		
+		
+		
+		assertEquals( expected, ArrayMath.dotProduct(x, y) + ArrayMath.dotProduct(x, z), TOL);
+		
+	}
+		
+	@Test
+	public void testDotProductOfEachAxis() {
+		// unit vectors
+		double[] i = {1, 0, 0};
+		double[] j = {0, 1, 0};
+		double[] k = {0, 0, 1};
+		
+		assertEquals( 0, ArrayMath.dotProduct(i, j), TOL);
+		assertEquals( 0, ArrayMath.dotProduct(i, k), TOL);
+		assertEquals( 0, ArrayMath.dotProduct(j, k), TOL);
+	}
+	
+	@Test
+	public void testDotProductWithConstant() {
+		double[] x = {1.0, 2.6};
+		double[] y = {8.6, -8.7};
+		Random rand = new Random();
+		int c = rand.nextInt(100) + 1;
+		
+		double[] cX = {c*x[0], c*x[1]};
+		double[] cY = {c*y[0], c*y[1]};
+		
+		assertEquals( ArrayMath.dotProduct(cX, y), ArrayMath.dotProduct(x, cY), TOL);
+		assertEquals( ArrayMath.dotProduct(x, cY), c*ArrayMath.dotProduct(x, y), TOL);
+		assertEquals( c*ArrayMath.dotProduct(x, y), ArrayMath.dotProduct(cX, y), TOL);
+	}
+	
+	
+	@Test 
+	public void testDotProductSameVectors() {
+		double[] x = {8.0, -7.0, 9.0, -2.3};
+		
+		double sum = 0;
+		for (int i = 0; i < x.length; i++) sum += (x[i]*x[i]);
+		
+		double expected = Math.pow(Math.sqrt(sum), 2);
+		
+		assertEquals( expected, ArrayMath.dotProduct(x, x), TOL);
+	}
 
 	@Test
 	public void testDotProductHugeVectors() {
@@ -53,7 +108,7 @@ public class ArrayMathTest {
 	 * This test should throw an exception,
 	 * but not after you change the spec for dotProduct!
 	 */
-	@Test(expected=java.lang.IllegalArgumentException.class)
+	@Test
 	public void testDotProductLengthsNotSame() {
 		double[] x = new double[] {1, 3, 5, 7, 9};
 		double[] y = new double[] {-2, 0.5, 4};
