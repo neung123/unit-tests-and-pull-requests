@@ -14,6 +14,7 @@ public class Statistics {
 	 * @return the arithmetic average of values in x, or 0 if x is empty.
 	 */
 	public static double average(double[] x) {
+		if(x.length == 0 ) return 0;
 		double sum = Arrays.stream(x).sum();
 		return sum/x.length;
 	}
@@ -28,10 +29,11 @@ public class Statistics {
 	 */
 	public static double variance(double[] x) {
 		double sum = 0;
-		try {
-			for (double number: x) sum += number*number;
-			return (sum/x.length) - (average(x)*average(x));
-		}catch (ArrayIndexOutOfBoundsException e){ throw new IllegalArgumentException("Array is empty.");}
+		if(x.length == 0) throw new IllegalArgumentException("Array is empty.");
+
+		for (double number: x) sum += number*number;
+		return (sum/x.length) - (average(x)*average(x));
+
 
 	}
 	
@@ -55,10 +57,12 @@ public class Statistics {
 	 */
 	public static double covariance(double[] x, double[] y) {
 		double sum = 0;
-		try {
-			for (int i = 0; i < x.length; i++) sum += x[i]*y[i];
-			return (sum/x.length) - average(x)*average(y);
-		}catch (ArrayIndexOutOfBoundsException e){ throw new IllegalArgumentException("Arrays are not same length or length is 0.");}
+		if(x.length == 0 || y.length == 0) throw new IllegalArgumentException("Array is empty.");
+		if(x.length != y.length) throw new IllegalArgumentException("Arrays are not same length.");
+
+		for (int i = 0; i < x.length; i++) sum += x[i]*y[i];
+		return (sum/x.length) - average(x)*average(y);
+
 	}
 	
 }
