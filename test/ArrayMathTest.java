@@ -28,6 +28,7 @@ public class ArrayMathTest {
 	
 	@Test
 	public void testDotProductThreeVectors() {
+		// vectors with 3 axis
 		double[] x = {-0.9, 8.5, 1.2};
 		double[] y = {90.0, 5.2, 7.9};
 		double[] z = {4.2, 0.36, 8.6};
@@ -38,8 +39,6 @@ public class ArrayMathTest {
 			sumOfTwoVectors[i] = y[i] + z[i];
 			expected += x[i] * sumOfTwoVectors[i];
 		}
-		
-		
 		
 		assertEquals( expected, ArrayMath.dotProduct(x, y) + ArrayMath.dotProduct(x, z), TOL);
 		
@@ -67,9 +66,10 @@ public class ArrayMathTest {
 		double[] cX = {c*x[0], c*x[1]};
 		double[] cY = {c*y[0], c*y[1]};
 		
-		assertEquals( ArrayMath.dotProduct(cX, y), ArrayMath.dotProduct(x, cY), TOL);
-		assertEquals( ArrayMath.dotProduct(x, cY), c*ArrayMath.dotProduct(x, y), TOL);
-		assertEquals( c*ArrayMath.dotProduct(x, y), ArrayMath.dotProduct(cX, y), TOL);
+		//properties of dot product
+		assertEquals( cX[0]*y[0] + cX[1]*y[1], ArrayMath.dotProduct(x, cY), TOL);
+		assertEquals( x[0]*cY[0] + x[1]*cY[1], c*ArrayMath.dotProduct(x, y), TOL);
+		assertEquals( c*(x[0]*y[0] + x[1]*y[1]), ArrayMath.dotProduct(cX, y), TOL);
 	}
 	
 	
@@ -104,10 +104,7 @@ public class ArrayMathTest {
 		assertEquals( product, ArrayMath.dotProduct(y, x), TOL);
 	}
 
-	/** 
-	 * This test should throw an exception,
-	 * but not after you change the spec for dotProduct!
-	 */
+	
 	@Test
 	public void testDotProductLengthsNotSame() {
 		double[] x = new double[] {1, 3, 5, 7, 9};
