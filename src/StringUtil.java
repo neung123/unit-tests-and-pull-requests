@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * @author Napasai Sutthichutipong
  * Some utility methods for Strings.
  */
 public class StringUtil {
